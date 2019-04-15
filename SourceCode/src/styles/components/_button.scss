@@ -1,0 +1,83 @@
+.buttonSecondary{
+    height: 3.8rem;
+    min-width: 10rem;
+    background-color: $primary-col;
+    border-radius: .8rem;
+
+    display: flex;
+    align-items: center;
+    padding: .5rem;
+    color:white;
+    cursor: pointer;
+    &__text{
+        color: inherit;
+        text-transform: uppercase;
+        margin-right: .5rem;
+    }
+
+    &__circle{
+        background-color: $primary-col;
+        height: 20rem;
+    }
+
+    &:hover{
+        color: $contrast-col;
+
+        .btn__icon {
+            fill: $contrast-col;
+        }
+    }
+}
+
+.button{
+    height: 3.8rem;
+    width: 3.8rem;
+    background-color: $primary-col;
+    border-radius: 50%;
+    display: inline-block;
+    margin: .1rem .5rem;
+
+    cursor: pointer;
+}
+
+.btn__icon{
+    position: relative;
+    top: -.3rem;
+    left: -.1rem;
+    height:2.5rem;
+    width: 2.5rem;
+    fill: white;
+    margin: 1rem;
+}
+
+.icon-minus{
+    top: -.4rem;
+    left: -.3rem;
+}
+
+.icon-plus{
+    top: -.4rem;
+    left: -.3rem;
+}
+
+.icon-pause2{
+    left: -.36rem;
+    top: -.3rem;
+}
+
+.icon-cog{
+    left: -.3rem;
+    top: -.3rem;
+}
+
+.icon-mug{
+    left: -.25rem;
+}
+
+.icon-next2{
+    left: -.3rem;
+}
+
+.icon-undo{
+    left: -.29rem;
+}

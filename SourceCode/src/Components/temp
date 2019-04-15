@@ -1,0 +1,199 @@
+
+    //functions to handle start/pause/stop for startwatch
+    watchControl = () => {
+        //checking if this session is whether any of the break sessions
+        if(this.config.play === 'mug'){
+            this.config.freshFlag = 1;
+            this.config.break = true;
+            this.sounds.ring.current.pause();
+            this.setState((state) => ( {...state,pass: {
+                min: `${this.state.settings.shortBreakDuration - 1}`,
+                sec: '59',
+                percentage: 100
+            },btnStatus: {
+                play: `play3`
+            }} ) );
+            this.startwatch('shortBreakDuration');
+        }
+        else{
+            //condition when break is ongoing user wants to interrupts for next focus session
+            if(this.config.break){
+                this.stop()
+            }else{
+                if(this.config.freshFlag){
+                    this.setState((state) => ( {...state,
+                        pass: {
+                            min: `${this.state.settings.focusDuration - 1}`,
+                            sec: '59',
+                            percentage: 100
+                        }
+                    } ) );
+                    this.startwatch('focusDuration');
+            
+                }else{
+                    this.pause();
+                }
+            }
+        }
+    };
+
+    //below are functions for the pomodoro clock
+    pause = () => {
+        if(!this.config.paused){
+            clearInterval(this.config.intId);
+            this.config.paused= true;
+            this.setState((state) => ( {...state, btnStatus: {play: `play3`}}));
+        }else{
+            this.config.paused= true;
+            this.setState((state) => ( {...state, btnStatus: {play: `pause2`}}));
+            this.startwatch();
+        }
+        
+    };
+
+    stop = () => {
+        if(!this.config.freshFlag){
+            clearInterval(this.config.intId);
+            this.config.freshFlag = 1;
+            this.setState((state) => ({
+                ...state,
+                btnStatus: {
+                    play: `play3`
+                },
+                local: {
+                    min: 0,
+                    sec: 0
+                },
+                pass: {
+                    min: '00',
+                    sec: '00',
+                    percentage: 0
+                }
+            }) );
+            this.increIncompleted();
+        }
+    };
+
+    startwatch = (type) => {
+        //checking whether the clock is being restarted after being paused or not
+        console.log(this.state.settings,this.config);
+        if(this.config.freshFlag){
+            this.config.freshFlag = 0;
+            this.setState((state) => ({
+                ...state,
+                btnStatus: {
+                    play: `pause2`
+                },
+                local: {
+                    min: state.settings[type] - 1,
+                    sec: 59
+                }
+            }) );
+        }
+        
+        const intervalId = setInterval(()=>{
+            //if 1 second is left decrement minutes by 1 and set seconds to 59
+            if(this.state.local.sec===1){
+                this.setState((state) => ({
+                        ...state,
+                        local: {
+                            min: state.local.min - 1,
+                            sec: 59
+                        }
+                }) );
+            }else{
+                this.setState((state) => ({
+                    ...state,
+                    local: {
+                        min: state.local.min,
+                        sec: state.local.sec - 1,
+                    }
+                }) );
+            }
+    
+            this.setState((state) => ({
+                ...state,
+                pass: {
+                    min: state.local.min>9?state.local.min.toString():`0${state.local.min.toString()}`,
+                    sec: state.local.sec>9?state.local.sec.toString():`0${state.local.sec.toString()}`,
+                    percentage: ((state.local.min * 60 + state.local.sec)/ (state.settings[type] *60)) * 100
+                }
+            }) );
+            
+            //if it was last minute and time's up it would have been set to -1 while checking sec ===1 above
+            if(this.state.local.min<0){
+                clearInterval(this.config.intId);
+                this.setState((state) => ({
+                    ...state,
+                    btnStatus: {
+                        play: `mug`
+                    },
+                    local: {
+                        min: 0,
+                        sec: 0
+                    },
+                    pass: {
+                        min: '00',
+                        sec: '00',
+                        percentage: 0
+                    }
+                }) );
+
+                if(type==='focusDuration')
+                    this.increCompleted();
+            }
+        },1000);
+        
+        this.config.intId = intervalId;
+        this.config.freshFlag = 0;
+    };
+
+    addAminute = () => {
+        this.setState((state) => ({...state,
+            local: {
+                min: state.local.min + 1,
+                sec: state.local.sec
+            },
+            pass: {
+                min: `${(state.local.min+1) > 9? state.local.min + 1:'0'+(state.local.min + 1)}`,
+                sec: `${state.local.sec > 9?state.local.sec:'0'+state.local.sec}`,
+                percentage: ((state.local.min +1 * 60 + state.local.sec)/ (state.totalTime *60)) * 100
+            }
+        }));
+    };
+
+    deductAminute = () => {
+        this.setState((state) => {
+            if(state.local.min > 1){
+                return {...state,
+                    local: {
+                        min: state.local.min - 1,
+                        sec: state.local.sec
+                    },
+                    pass: {
+                        min: `${(state.local.min-1) > 9? state.local.min - 1:'0'+(state.local.min - 1)}`,
+                        sec: `${state.local.sec>9?state.local.sec:'0'+state.local.sec}`,
+                        percentage: ((state.local.min-1 * 60 + state.local.sec)/ (state.totalTime *60)) * 100
+                    }
+                }
+            }else{
+                clearInterval(this.config.intId);
+                return {
+                    ...state,
+                    config: {
+                        play: `play3`,
+                        freshFlag: 1
+                    },
+                    local: {
+                        min: 0,
+                        sec: 0
+                    },
+                    pass: {
+                        min: '00',
+                        sec: '00',
+                        percentage: 0
+                    }
+                }
+            }
+        });
+    };

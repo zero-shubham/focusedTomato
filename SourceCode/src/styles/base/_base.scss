@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after{
+    box-sizing: inherit;
+}
+
+html{
+    font-size: 62.5%;
+    background-image: url('./images/cover.jpg');
+    background-size: cover;
+    box-sizing: border-box;
+    max-height: inherit;
+}
+
+
+
+body{
+    @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i');
+
+    font-family: 'Inconsolata', monospace;
+    font-size: 1.5rem; 
+    max-height: inherit;
+    overflow: hidden;
+}
+

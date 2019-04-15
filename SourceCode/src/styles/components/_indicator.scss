@@ -1,0 +1,12 @@
+.indicator{
+    height: 2rem;
+    width: 2rem;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: .1rem .5rem;
+}
+
+.active.indicator{
+    background-color: $primary-col;
+}
