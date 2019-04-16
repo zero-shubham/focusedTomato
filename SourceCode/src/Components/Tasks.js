@@ -32,6 +32,9 @@ class Tasks extends Component{
     }
     
     addnewTask = (task, target) => {
+        if(target>44){
+            target=44;
+        }
         this.props.dispatch(startAddTask({task: task,target:target}));
     };
 
@@ -111,6 +114,9 @@ class Tasks extends Component{
                 <ModalEditTask active={this.state.modalEditTaskActive} close={this.toggleModalEditTask} 
                 displayTask={this.state.displayTask}
                 editTask={(task,target) => {
+                    if(target>44){
+                        target=44;
+                    }
                     this.props.dispatch(startEditTask({task: task,target:target}));
                 }}
                 removeTask={(task) => {

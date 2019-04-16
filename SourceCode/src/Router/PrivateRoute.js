@@ -1,13 +1,14 @@
 import React from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-import Signin from '../Components/Signin';
+import {addPrompt} from '../actions/prompt';
 
 const PrivateRoute = ({path,isAuthenticated,component:Component,...rest}) => {
     if(!isAuthenticated){
+        rest.addPrompt();
         return (
-            <Route {...rest} component={()=>(<Signin promptRoute={true} promptMsg={'Arggh..You are not logged in!'}/>)} path='/error'/>
+            <Redirect to='/'/>
         )
     }else{
         return (
@@ -17,10 +18,20 @@ const PrivateRoute = ({path,isAuthenticated,component:Component,...rest}) => {
     
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addPrompt: () => dispatch(addPrompt({
+            prompt:true,
+            promptIcon: 'attention',
+            promptText:'Arggh..You are not logged in!'
+        }))
+    }
+}
+
 const mapsStateToProps = (store) => {
     return {
         isAuthenticated: !!store.auth.cred
     }
 };
 
-export default connect(mapsStateToProps)(PrivateRoute);
+export default connect(mapsStateToProps,mapDispatchToProps)(PrivateRoute);

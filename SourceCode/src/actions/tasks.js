@@ -24,13 +24,14 @@ export const startRemoveTask = (task) => {
     return (dispatch,getState) => {
         const uid = getState().auth.cred.uid;
         database.ref(`users/${uid}/tasks/${task}`).remove().then( () => {
+            dispatch(removeTask(task));
             //this is to set the empty flag to true, since that helps in rendering logic
             database.ref(`users/${uid}/tasks`).once('value');/*.then((snapshot)=>{
                 if(Object.keys(snapshot.val()).length===1){
                     database.ref(`users/${uid}/tasks`).update({empty:true});
                 }
             });*/
-            dispatch(removeTask(task));
+            
         })
     }
 }

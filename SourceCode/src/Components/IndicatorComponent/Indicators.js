@@ -19,7 +19,7 @@ class Indicators extends Component{
         }
 
         return (
-            <div>
+            <div className='indicators'>
                 {active}
                 {inactive}
             </div>

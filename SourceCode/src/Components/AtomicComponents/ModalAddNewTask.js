@@ -36,7 +36,7 @@ const ModalAddNewTask = (props) => {
             />
 
             <button className='modal__btn' onClick={()=>{
-                props.addTask(task,target);
+                props.addTask(task.toLowerCase(),target);
                 props.close();
             }}>
                 ADD

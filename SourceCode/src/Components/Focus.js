@@ -15,12 +15,12 @@ class Focus extends Component{
     constructor(props){
         super(props);
         this.notification = new Notification()
-//local state for the startwatch
+        //local state for the startwatch
         this.sounds = {
             ring: React.createRef(),
             ticking: React.createRef()
         };
-        window.reftest = this.sounds.ring;
+
         this.config ={
             duration : 0,
             newSession: true,
@@ -34,7 +34,7 @@ class Focus extends Component{
         };
 
         //=====================================================================
-        /*different store that is not rendering had to do this as setState is async 
+        /*different store, that is not rendering had to do this, as setState is async 
         and took time to update this data which is not rendering and
           as redux store is different occassionaly lagged behind */
         this.selectedTask= {
@@ -256,18 +256,10 @@ class Focus extends Component{
         
         if(this.props.tasks){
             let tasks = Object.keys(this.props.tasks);
-            console.log(tasks,'bug hunting')
             this.updateTask(tasks[0]);
             this.updateRootStore();
         }
     }
-
-    /*componentDidUpdate(){
-        if(this.config.intId===-1 && this.config.storeUpdate){
-            console.log("shit logic")
-            this.updateRootStore();
-        }
-    }*/
 
     //function to handle when task is changed 
     onTaskChange = (selectedTask) => {

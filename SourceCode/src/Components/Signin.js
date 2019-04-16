@@ -8,13 +8,16 @@ import {startGoogleLogin, startFBLogin, startSignup, startEmailLogin, login} fro
 import {startInitSession} from '../actions/pomodoroSessions';
 import {startSetTasks} from '../actions/tasks';
 import {startInitConfig} from '../actions/config';
-import {resetPrompt} from '../actions/prompt';
+import {resetPrompt,resetProcessing} from '../actions/prompt';
 
 import Reset from './AtomicComponents/Reset';
 import Login from './AtomicComponents/Login';
 import Signup from './AtomicComponents/Signup';
 import Processing from './AtomicComponents/Processing';
 import Prompt from './AtomicComponents/Prompt';
+
+import '../firebase/firebase';
+import {firebase} from '../firebase/firebase';
 
 import googleSvg from '../assets/google.svg';
 import fbSvg from '../assets/facebook.svg';
@@ -25,18 +28,21 @@ import guestImg from '../assets/guest.jpg';
 class Signin extends Component{
     constructor(props){
         super(props);
-        window.test = props.prompt
-        console.log('debig',props.prompt)
         this.state = {
             display: 'signin',
             processing: false,
-            prompt: props.prompt.prompt? true : props.promptRoute ||false,
-            promptText: props.prompt.prompt ? props.prompt.promptText : props.promptMsg || '' ,
-            resetSent: false
+            prompt: false,
+            promptText: '' ,
+            promptIcon:''
             /*since prompt can be activated by store state or props passed as jsx tags need to check*/
         }
     };
 
+    resetAllInput = () => {
+        document.querySelector('#email').value = '';
+        document.querySelector('#pass').value = '';
+        document.querySelector('#profilePic').value = '';
+    };
 
     handleSign = () => {
         const email = document.querySelector('#email').value;
@@ -57,8 +63,29 @@ class Signin extends Component{
     };
 
     handleReset = () => {
-        if(!this.state.resetSent)
-            this.setState((state) => ({...state, resetSent: true}));
+        if(!document.querySelector('#email').value){
+            this.setState((state) => ({...state,prompt:true,promptText:'Oh, Come on! Enter the email to reset password!'}));
+            return
+        }
+        //this will render the input for code and new password
+        this.setState((state) => ({...state,processing:true}));
+        firebase.auth().sendPasswordResetEmail(document.querySelector('#email').value).then(() => {
+            this.setState((state) => ({...state, 
+                resetSent: true,
+                processing:false,
+                prompt:true,
+                promptText:'You will soon receive an email to reset the password,follow that link to change password.',
+                promptIcon: 'envelope'
+            }));
+        }).catch((error)=> {
+            this.setState((state) => ({...state, 
+                resetSent: false,
+                processing:false,
+                prompt:true,
+                promptText: error.message,
+                promptIcon: 'attention'
+            }));
+        });   
     };
 
     render(){
@@ -67,20 +94,21 @@ class Signin extends Component{
             
                 {
                     //Checking whether to render processing component
-                    this.state.processing && <Processing />
+                    this.state.processing  && <Processing />
                 }
 
 
                 {
                     //conditional rendering of prompt component
-                    this.state.prompt && 
+                    (this.state.prompt || this.props.prompt.prompt) && 
                     <Prompt 
-                    prompt={this.state.prompt} 
-                    promptText={this.state.promptText || this.props.promptMsg}
-                    icon={this.props.prompt.promptIcon || ''}
+                    prompt={this.state.prompt || this.props.prompt.prompt} 
+                    promptText={this.state.promptText || this.props.prompt.promptText}
+                    icon={this.props.prompt.promptIcon || this.state.promptIcon}
                     close ={() => {
-                        this.setState((state) => ({...state,prompt:false}));
+                        this.setState((state) => ({...state,prompt:false,processing:false, display:'signin'}));
                         this.props.dispatch(resetPrompt());
+                        this.resetAllInput();
                         history.push('/');
                     }}
                     />
@@ -171,7 +199,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (store) => {
-    if(Object.keys(store.prompt)){
+    if(Object.keys(store.prompt).length){
         return {
             prompt:{
                 ...store.prompt
@@ -179,7 +207,9 @@ const mapStateToProps = (store) => {
         }
     }else{
         return {
-            prompt: false
+            prompt: {
+                prompt: false
+            }
         }
     }
 }

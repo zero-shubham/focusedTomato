@@ -12,8 +12,9 @@ const tasksReducer = (state = tasksDefaultState, action) => {
     case 'REMOVE_TASK':
         let newObj={};
         Object.keys(state).forEach((key) => {
-            if(key!==action.remove)
+            if(key!==action.remove){
                 newObj[key]=state[key]
+            }
         });
         return newObj;
     case 'EDIT_TASK':

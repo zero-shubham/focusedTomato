@@ -6,10 +6,13 @@ const promptReducer = (state=promptDefaultState,action) => {
         return{
             prompt: action.prompt,
             promptIcon: action.promptIcon,
-            promptText: action.promptText,
-            passReset: action.passReset,
-            onConfirm: action.onConfirm
+            promptText: action.promptText
         };
+        case 'RESET__PROCESSING':
+        return {
+            ...state,
+            processing: action.processing
+        }
         default:
         return state;
     }

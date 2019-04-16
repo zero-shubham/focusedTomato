@@ -1,3 +1,10 @@
+.indicators{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
 .indicator{
     height: 2rem;
     width: 2rem;

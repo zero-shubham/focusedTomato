@@ -11,7 +11,7 @@ import {addSignupPrompt} from './actions/prompt';
 import {startInitSession} from './actions/pomodoroSessions';
 import {startSetTasks} from './actions/tasks';
 import {startInitConfig} from './actions/config';
-import {logout,login} from './actions/auth';
+import {logout,login,startLogout} from './actions/auth';
 import Loading from './Components/Loading';
 
 import './firebase/firebase';
@@ -21,6 +21,20 @@ import './styles/styles.scss';
 import './styles/base/normalize.css';
 
 const store = configStore();
+
+const initAppForUser = (cred) => {
+    console.log("rerendering")
+    //===============REDUNDANT CODE====================
+    store.dispatch(login('LOGIN',cred));
+
+    store.dispatch(startInitSession(moment().format('DD:MM:YYYY')));
+    store.dispatch( startSetTasks()).then(() => {
+        store.dispatch( startInitConfig()).then(() =>{
+            renderApp();
+            history.push('/focus');
+        });
+    });
+}
 
 const jsx = (
     <Provider store={store}>
@@ -43,11 +57,10 @@ const renderApp = () => {
 
 firebase.auth().onAuthStateChanged( (user) => {
     if(user){
+        console.log('change user state')
         if(user.displayName){
             //after signup there is no displayName so this if handles that
-
             if(!user.photoURL){//users with email signup have to reteive img from store for them
-
                 //getting image from store and setting to state
                 storageRef.ref(`${user.uid}`).getDownloadURL().then(url =>{
                     let cred  = {
@@ -55,19 +68,7 @@ firebase.auth().onAuthStateChanged( (user) => {
                         photoUrl: url,
                         uid: user.uid
                     }
-
-                    //===============REDUNDANT CODE====================
-                    store.dispatch(login('LOGIN',cred));
-
-                    store.dispatch(startInitSession(moment().format('DD:MM:YYYY')));
-                    store.dispatch( startSetTasks()).then(() => {
-                        store.dispatch( startInitConfig()).then(() =>{
-                            renderApp();
-                            if (history.location.pathname === '/') {
-                                history.push('/focus');
-                            };
-                        });
-                    });
+                    initAppForUser(cred);
                 });
                 
             }else{
@@ -77,29 +78,16 @@ firebase.auth().onAuthStateChanged( (user) => {
                     photoUrl: user.photoURL,
                     uid: user.uid
                 };
-
-                //===============REDUNDANT CODE====================
-                store.dispatch(login(
-                    'LOGIN',
-                    cred
-                ));
-                store.dispatch(startInitSession(moment().format('DD:MM:YYYY')));
-                store.dispatch( startSetTasks()).then(() => {
-                    store.dispatch( startInitConfig()).then(() =>{
-                        renderApp();
-                        if (history.location.pathname === '/') {
-                            history.push('/focus');
-                        };
-                    });
-                });
+                initAppForUser(cred);
             }
             
         }else{
             store.dispatch(addSignupPrompt());
+
+            //after signup firebase auto logs in which i don't want
+            firebase.auth().signOut();
             renderApp();
-            if (history.location.pathname === '/') {
-                history.push('/focus');
-            };
+            history.push('/');
         }
     }else{
         store.dispatch(logout());
