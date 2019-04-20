@@ -1,8 +1,8 @@
 # focusedTomato
 A pomodoro app with stats and cloud backup!
 
-##Components-
-####Canvas
+## Components-
+#### Canvas
 * AppRouter -> 1. Header  2. Switch <PrivateRouter> 3. Footer
 * Routes -> 1. ‘/’ <Signin> 2. ‘/focus’ <Focus>  3. ‘/tasks’ <Tasks>  4. ‘/stats’ <Stats> 5. ‘/settings’ <Settings>   6. <NotFoundPage>
 
