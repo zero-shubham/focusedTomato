@@ -5,8 +5,8 @@ A pomodoro app with stats and cloud backup!
 
 * Canvas
 * AppRouter -> 1. Header  2. Switch <PrivateRouter> 3. Footer
-* Routes -> 1. ‘/’ <Signin> 2. ‘/focus’ <Focus>  3. ‘/tasks’ <Tasks>  4. ‘/stats’ <Stats> 5. ‘/settings’ <Settings>   6. <NotFoundPage>
-
+* Routes -> 1. ‘/’ <Signin> 2. ‘/focus’ <Focus>  3. ‘/tasks’ <Tasks>  4. ‘/stats’ <Stats> 5. ‘/settings’ <Settings> 
+        6. < NotFoundPage >
 
 * < Focus > -> 1. <Indicators> 2. <Clock>   3. <Button>  4. <TaskList> 5. <Sound>
 * < Tasks > -> 1. <Button> 2. <ModalAddNewTask> 3. <ModalEditTask>
