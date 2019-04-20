@@ -8,18 +8,18 @@ A pomodoro app with stats and cloud backup!
 * Routes -> 1. ‘/’ <Signin> 2. ‘/focus’ <Focus>  3. ‘/tasks’ <Tasks>  4. ‘/stats’ <Stats> 5. ‘/settings’ <Settings> 
         6. < NotFoundPage >
 
-* < Focus > -> 1. <Indicators> 2. <Clock>   3. <Button>  4. <TaskList> 5. <Sound>
+* < Focus > -> 1. < Indicators > 2. < Clock >   3. < Button >  4. < TaskList > 5. < Sound >
 * < Tasks > -> 1. <Button> 2. <ModalAddNewTask> 3. <ModalEditTask>
-* < Settings > -> 1. <SettingItem>
+* < Settings > -> 1. < SettingItem >
 * < Signin > -> No imported components
 _________________________________________________________________________
 * < Indicators > -> “props” -> active, inactive 
     No of active dots and no of inactive dots
-    Further imports <Indicator> component
+    Further imports < Indicator > component
 * < Button > -> “props” -> cssClass, clicked(props.task), task, icon, text
 * < Clock > -> “props” -> percentage, min, sec
-    Further imports 3rd party component - <CircularProgressbar> from 'react-circular-progressbar'
-* < Footer > -> 1. <Link>  2.<Icon>
+    Further imports 3rd party component - < CircularProgressbar > from 'react-circular-progressbar'
+* < Footer > -> 1. < Link >  2.< Icon >
 * < Icon > -> “props”  -> icon
 * < ModalAddNewTask > -> “props” -> active, close, close()
     Further imports Modal from ‘react-modal’
