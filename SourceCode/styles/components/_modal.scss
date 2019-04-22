@@ -1,0 +1,117 @@
+.ReactModal__Overlay{
+    opacity: 0;
+    transition: all .3s ease-in-out;
+}
+.ReactModal__Overlay--after-open{
+    opacity: 1;
+
+    .modal{
+        opacity: 1;
+    }
+}
+.modal {
+    min-height: 36rem;
+    opacity: 0;
+    width: 50%;
+    height: 55%;
+
+    position: relative;
+    top: 10%;
+    left: 25%;
+    background: rgba($primary-col, .9);
+    color: white;
+    
+    outline: none;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    transition: opacity .3s ease-in-out;
+    &__close{
+        font-size: 3rem;
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        color: white;
+        cursor: pointer;
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    &__input{
+        min-width: 30rem;
+        border: none;
+        text-decoration: none;
+        color: $contrast-col;
+        padding: 1.5rem;
+        margin: 1rem auto;
+        font-size: 2rem;
+        backface-visibility: hidden;
+        border-bottom: .2rem solid transparent;
+        transition: all .2s;
+        &:focus{
+            outline: none;
+            border-bottom: .2rem solid $contrast-col;
+        }
+
+        &::placeholder{
+            color: $contrast-col;
+            text-transform: uppercase;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+    }
+
+    &__label{
+        font-size: 2rem;
+        text-transform: uppercase;
+        color: $contrast-col;
+        margin: 3rem;
+
+        &-task{
+            font-size: 3.5rem;
+            font-weight: 600;
+        }
+    }
+
+    &__btn{
+        min-width: 15rem;
+        margin-top: 2rem;
+        padding: 1.2rem;
+
+        text-decoration: none;
+        border: none;
+
+        background-color: white;
+        color: $contrast-col;
+
+        font-weight: bold;
+        cursor: pointer;
+
+        border-bottom: .2rem solid transparent;
+        transition: all .2s;
+        &:focus{
+            outline: none;
+        }
+        &:hover{
+            transform: translateY(-.2rem);
+            border-bottom: .2rem solid $contrast-col;
+        }
+        &:active{
+            transform: translateY(0);
+            border-bottom: .1rem solid $contrast-col;
+        }
+
+        &-container{
+            width: 45%;
+            display: flex;
+            justify-content: space-between; 
+        }
+    }
+}
+
