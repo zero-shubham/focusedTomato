@@ -34,10 +34,10 @@ export const initSession = ({date,data}) => ({
 export const startInitSession = (date) => {
     return (dispatch,getState) => {
         const uid = getState().auth.cred.uid;
-        return database.ref("data").once("value", (snapshot) => {
+        return database.ref(`users/${uid}`).once("value", (snapshot) => {
             if(snapshot.val()){
-                if(snapshot.val()[date]){
-                    let data = snapshot.val()[date];
+                if(snapshot.val().data[date]){
+                    let data = snapshot.val().data[date];
                     dispatch(initSession({date,data}));
                 }
             }

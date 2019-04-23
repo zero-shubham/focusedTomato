@@ -2,6 +2,8 @@ import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 
+import moment from 'moment';
+
 import { history } from './Router/AppRouter';
 
 import configStore from './store/configStore';
@@ -25,23 +27,19 @@ const Canvas = React.lazy(() => import('./Components/Canvas'));
 
 const store = configStore();
 
-let initAppForUser;
-import('moment').then((moment) => {
-    initAppForUser = (cred) => {
-        console.log("rerendering")
-        //===============REDUNDANT CODE====================
-        store.dispatch(login('LOGIN',cred));
-    
-        store.dispatch(startInitSession(moment().format('DD:MM:YYYY')));
-        store.dispatch( startSetTasks()).then(() => {
-            store.dispatch( startInitConfig()).then(() =>{
-                renderApp();
-                history.push('/focus');
-            });
+const initAppForUser = (cred) => {
+    //===============REDUNDANT CODE====================
+    store.dispatch(login('LOGIN',cred));
+
+    store.dispatch(startInitSession(moment().format('DD:MM:YYYY')));
+    store.dispatch( startSetTasks()).then(() => {
+        store.dispatch( startInitConfig()).then(() =>{
+            renderApp();
+            history.push('/focus');
         });
-    }
-    
-});
+    });
+}
+
 
 const jsx = (
     <Suspense fallback={<Loading/>}>
@@ -65,7 +63,6 @@ const renderApp = () => {
 
 firebase.auth().onAuthStateChanged( (user) => {
     if(user){
-        console.log('change user state')
         if(user.displayName){
             //after signup there is no displayName so this if handles that
             if(!user.photoURL){//users with email signup have to reteive img from store for them

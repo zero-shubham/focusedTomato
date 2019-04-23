@@ -41,7 +41,7 @@ class Index extends Component{
     resetAllInput = () => {
         document.querySelector('#email').value = '';
         document.querySelector('#pass').value = '';
-        document.querySelector('#profilePic').value = '';
+        document.querySelector('#profilePic')?document.querySelector('#profilePic').value = '':false;
     };
 
     handleSign = () => {

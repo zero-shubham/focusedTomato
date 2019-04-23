@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {startEditConfig} from '../actions/config';
 import SettingItem from './AtomicComponents/SettingsItem';
 
+import brain from '../assets/brain.svg';
+
 class Settings extends Component{
     constructor(props){
         super(props);
@@ -29,6 +31,15 @@ class Settings extends Component{
                     <SettingItem label='Sessions Before Long-break' val={this.state.sessionBeforeLongBreak} tag={'sessionBeforeLongBreak'} onChange={this.onChangeVal}/>
                     <SettingItem label='Notifications' toggle={true} check={this.state.notification} tag={'notification'} onChange={this.onChangeVal}/>
                     <SettingItem label='Silent' toggle={true} check={this.state.silent} tag={'silent'} onChange={this.onChangeVal}/>
+                </div>
+
+                <div className='rights'>
+                    <span className='rights__reserved'>
+                        All rights reserved. &copy;
+                    </span>
+                    <span className='rights__madeBy'>
+                        Made with <img src={brain} className='rights__madeBy-img'/> by <a href='https://github.com/zero-shubham' className='rights__madeBy-link'>Shubham Biswas</a>
+                    </span>
                 </div>
             </div>
         )

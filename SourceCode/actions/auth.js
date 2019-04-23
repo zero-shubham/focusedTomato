@@ -1,5 +1,7 @@
 import {firebase, googleAuthProvider, facebookAuthProvider, storageRef} from '../firebase/firebase';
 
+import {addPrompt} from './prompt';
+
 export const startGoogleLogin = () => {
     return (dispatch) => {
         return firebase.auth().signInWithPopup(googleAuthProvider).then((result)=>{
@@ -10,6 +12,8 @@ export const startGoogleLogin = () => {
                 uid: user.uid
             }
             dispatch(login('LOGIN',cred));
+        }).catch((error) => {
+            dispatch(addPrompt({prompt:true,promptIcon:'attention',promptText:error.message}))
         });
     };
 };
@@ -24,6 +28,8 @@ export const startFBLogin = () => {
                 uid: user.uid
             }
             dispatch(login('LOGIN',cred));
+        }).catch((error) => {
+            dispatch(addPrompt({prompt:true,promptIcon:'attention',promptText:error.message}))
         });
     };
 };
@@ -42,6 +48,8 @@ export const startEmailLogin = ({email,password}) => {
                 }
                 dispatch(login('LOGIN',cred));
             });
+        }).catch((error) => {
+            dispatch(addPrompt({prompt:true,promptIcon:'attention',promptText:error.message}))
         });
     };
 }
@@ -59,7 +67,7 @@ export const login = (type,cred) => {
 //===================================+CREATE USER WITH EMAIL=========================================
 
 export const startSignup = ({email,password,name,file}) => {
-    return () => {
+    return (dispatch) => {
         let user;
         return firebase.auth().createUserWithEmailAndPassword(email,password).then((result) => {
             user = firebase.auth().currentUser;
@@ -70,6 +78,8 @@ export const startSignup = ({email,password,name,file}) => {
                 displayName: name
             });
             
+        }).catch((error) => {
+            dispatch(addPrompt({prompt:true,promptIcon:'attention',promptText:error.message}))
         });
 
 

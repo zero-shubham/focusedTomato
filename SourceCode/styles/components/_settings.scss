@@ -7,7 +7,7 @@
     align-items: center;
 
     &__list{
-        min-height: 35rem;
+        min-height: 37rem;
         margin: auto;
 
         &-item{
@@ -115,4 +115,28 @@ font-family: Verdana, sans-serif;
 input:checked + .slider:after
 {  
 content:'ON';
+}
+
+
+.rights{
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    color: $contrast-col;
+    
+    &__madeBy{
+        margin: 1rem 0;
+        &-img{
+            width: 2rem;
+ 
+        }
+
+        &-link{
+            text-decoration: none;
+            color: $contrast-col;
+            font-weight: bold;
+        }
+    }
 }
