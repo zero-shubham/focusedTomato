@@ -17,7 +17,17 @@
         margin: 2rem 0 0 2.2rem;
 
         font-size: 2rem;
-        text-transform: uppercase;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+        &__txt{
+            color: $secondary-col;
+            margin: 2rem 0 0 2.2rem;
+    
+            font-size: 2rem;
+            text-transform: uppercase;
 
         display: flex;
         flex-direction: column;
@@ -114,4 +124,4 @@
       transform: scale(1.5);
     }
   }
-  
+}

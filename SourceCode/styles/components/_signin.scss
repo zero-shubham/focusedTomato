@@ -1,13 +1,19 @@
 .signin{
-    min-height: 50rem;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    padding: 0rem 10rem;
-
+    
+    
     position: relative;//had to do this for processing component styling;
 
+    @include respond(tab-port){
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding: 0;
+    }
+    
     &__hr{
         position: absolute;
         left: 50%;
@@ -15,6 +21,11 @@
         height: 36rem; 
         background: $contrast-col;
         border: none;
+
+        @include respond(tab-port){
+            height: 80rem;
+            transform: rotate(90deg);
+        }
     }
 
     &__create{

@@ -6,7 +6,19 @@
     font-size: 5.2rem;
     font-weight: 800;
 
+    @include respond(tab-port){
+        font-size: $mobile-font-header;
+    }
+
     height: 6.5rem;
+    @include respond(phone){
+        height: 10rem;
+        font-size: $mobile-font-header + 1.5;
+    }
+    @include respond(phone-s){
+        height: 8rem;
+        font-size: $mobile-font-header - .5;
+    }
     padding: 1rem;
 
     display: flex;
@@ -23,29 +35,53 @@
         align-items: center;
         justify-content: space-between;
         position: relative;
-
-        height: 6.5rem;
         &-img{
             width: 5.5rem;
             height: 5.5rem;
             border-radius: 100%;
             margin: .2rem .5rem .2rem .5rem;
+
+            @include respond(phone){
+                height: 8rem;
+                width: 8rem;
+            }
         }
 
         &-name{
             font-size: 2rem;
             font-weight: 300;
             margin: .5rem;
+
+            @include respond(tab-port){
+                font-size: $tab-font;
+            }
+            @include respond(phone){
+                font-size: $mobile-font;
+            }
         }
         &-dropdown{
             &-chev{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
                 border-radius: 100%;
-                height: 1.5rem;
-                width: 2.8rem;
+
+                width: 3rem;
+                height: 3rem; 
+                @include respond(tab-port){
+                    font-size: $mobile-font+ .5;
+                }
+                @include respond(phone){
+                    font-size: $mobile-font+1.5;
+                }
+                padding-bottom: .5rem;
+
                 font-family: 'Dancing Script', cursive;
                 font-size: 3rem;
+
                 cursor: pointer;
-                padding-bottom: 4rem;
+                
                 margin: 0 .3rem 0 0;
                 transition: all .5s;
                 &:hover{
@@ -59,11 +95,15 @@
             opacity: 0;
 
             position: absolute;
-            top: 99%;
-            right: 0%;
+            top: 110%;
+            right: -6%;
             height: 2rem;
             width: 16rem;
-            
+            @include respond(tab-port){
+                width: 30rem;
+                height: 10rem;
+                right: -7%;
+            }
             background-color: $main-bg-col;
             transition: all .2s;
 
@@ -81,6 +121,10 @@
                 text-transform: uppercase;
                 border-bottom: .1rem solid $secondary-col;
                 cursor: pointer;
+
+                @include respond(tab-port){
+                    font-size: 2.5rem;
+                }
             }
         }
 

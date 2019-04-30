@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 
 
 const Clock = (props) => (
-            <div style={{ width: '30rem' }}>
+            <div className='focus__clock'>
                 <CircularProgressbar
                 percentage={props.percentage}
                 text={`${props.min}:${props.sec}`}

@@ -30,7 +30,7 @@ export const history = createBrowserHistory();
 
 const AppRouter = (props) => (
     <Router history={history}>
-        <div>
+        <div className='canvas__flexboxContainer'>
                 <Header forwardref={props.forwardRef}/>
                     <Suspense fallback={<div className='dynamicload'><Processing/></div>}>
                         <Switch>

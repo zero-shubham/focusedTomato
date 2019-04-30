@@ -7,7 +7,7 @@ import Processing from './AtomicComponents/Processing';
 const Clock = React.lazy(() => import('./AtomicComponents/Clock'));
 const Indicators = React.lazy(() => import('./IndicatorComponent/Indicators'));
 const Button = React.lazy(() => import('./AtomicComponents/Button'));
-const TaskList = React.lazy(() => import('././AtomicComponents/TaskList'));
+const TaskList = React.lazy(() => import('./AtomicComponents/TaskList'));
 const Sound = React.lazy(() => import('./AtomicComponents/Sound'));
 import {startAddSession} from '../actions/pomodoroSessions';
 import Notification from './AtomicComponents/Notification';
@@ -84,6 +84,10 @@ class Focus extends Component{
 
 
         this.increCompleted = () => {
+            //one can't complete more than targets
+            if(this.selectedTask.completed === this.state.totalSessions)
+                return
+            
             this.selectedTask.completed = this.selectedTask.completed + 1;
             this.updateRootStore();
             this.setState((state) => ({...state, completed: this.selectedTask.completed}));
@@ -92,7 +96,6 @@ class Focus extends Component{
                 this.sounds.ring.current.play()
             if(this.props.settings.notification)
                 this.notification.sendNotification('Well Done! You completed your focused session!');
-            this.config.storeUpdate = true;
         };
         this.increIncompleted = () => {
             this.selectedTask.incomplete = this.selectedTask.incomplete + 1;
@@ -127,12 +130,13 @@ class Focus extends Component{
                 //if it was last minute and time's up it would have been set to -1 while checking sec ===1 above
                 if(this.config.local.min===0 && this.config.local.sec===0){
                     if(type==='focusDuration'){
+                        this.setState((state) => ({...state, btnStatus:'mug'}));
                         this.config.break = true;
                         this.increCompleted();
-                        this.setState((state) => ({...state, btnStatus:'mug'}));
                     }else{
-                        this.config.break = false;
+
                         this.setState((state) => ({...state, btnStatus:'play3'}));
+                        this.config.break = false;
                     }
                     this.config.newSession = true;
                     clearInterval(this.config.intId);
@@ -247,6 +251,10 @@ class Focus extends Component{
         };
 
         this.restart = () => {
+            //completed task can't be negative
+            if(this.selectedTask.completed === 0)
+                return
+
             this.selectedTask.completed = this.selectedTask.completed - 1;
             this.updateRootStore();
             this.setState((state) => ({...state, completed: this.selectedTask.completed}));

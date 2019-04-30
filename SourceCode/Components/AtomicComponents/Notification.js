@@ -8,14 +8,16 @@ class Notification{
     }
 
     sendNotification = (msg) => {
-        if(window.Notification.permission === 'granted'){
-            this.notification = new window.Notification('FocusedTomato',{
-                body: msg
-            });
-        }
-        this.notification.onclick = () => {
-            window.focus();
-        }
+        try{
+            if(window.Notification.permission === 'granted'){
+                this.notification = new window.Notification('FocusedTomato',{
+                    body: msg
+                });
+                this.notification.onclick = () => {
+                    window.focus();
+                }
+            }
+        }catch{}
     }
 }
 
