@@ -18,13 +18,8 @@ const tasksReducer = (state = tasksDefaultState, action) => {
         });
         return newObj;
     case 'EDIT_TASK':
-        newObj={};
-        Object.keys(state).forEach((key,val) => { 
-            if(key===action.task)
-                newObj[key]=action.target;
-            else
-                newObj[key]=val;
-        });
+        newObj = {...state};
+        newObj[action.task] = action.target
         return newObj;
     case 'SET_TASKS':
         return action.tasks

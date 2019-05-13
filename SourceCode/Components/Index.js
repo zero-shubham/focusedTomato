@@ -40,7 +40,9 @@ class Index extends Component{
 
     resetAllInput = () => {
         document.querySelector('#email').value = '';
-        document.querySelector('#pass').value = '';
+        try{
+            document.querySelector('#pass').value = '';
+        }catch{}
         document.querySelector('#profilePic')?document.querySelector('#profilePic').value = '':false;
     };
 
@@ -106,7 +108,7 @@ class Index extends Component{
                     promptText={this.state.promptText || this.props.prompt.promptText}
                     icon={this.props.prompt.promptIcon || this.state.promptIcon}
                     close ={() => {
-                        this.setState((state) => ({...state,prompt:false,processing:false, display:'signin'}));
+                        this.setState((state) => ({...state,prompt:false,promptText:'',promptIcon:'',processing:false, display:'signin'}));
                         this.props.dispatch(resetPrompt());
                         this.resetAllInput();
                         history.push('/');

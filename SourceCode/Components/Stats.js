@@ -38,6 +38,7 @@ class Stats extends Component{
         //logic for extrating datelist
         const beginDate = lastWeek[1]+ ':' + lastWeek[0] + ':' + lastWeek[2];
         let dateList;
+
         if(Object.keys(this.fetchedData).indexOf(beginDate) === -1)
             dateList = Object.keys(this.fetchedData).slice(0,Object.keys(this.fetchedData).indexOf(this.props.date)+1);
         else
@@ -125,7 +126,7 @@ class Stats extends Component{
         }else{
             let fetchDays;
             if(this.state.dashboard.rangeOfData === 'week')
-                fetchDays = 1;
+                fetchDays = 7;
             else if(this.state.dashboard.rangeOfData === 'month')
                 fetchDays = 'month'
             else if(this.state.dashboard.rangeOfData === '6months')

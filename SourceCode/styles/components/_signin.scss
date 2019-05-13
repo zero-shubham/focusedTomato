@@ -23,7 +23,7 @@
         border: none;
 
         @include respond(tab-port){
-            height: 80rem;
+            height: 50rem;
             transform: rotate(90deg);
         }
     }
