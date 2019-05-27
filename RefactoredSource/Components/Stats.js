@@ -8,7 +8,6 @@ import Chart from './AtomicComponents/Chart';
 
 import database from '../firebase/firebase';
 
-import rotateSvg from '../assets/refresh-button.svg';
 
 class Stats extends Component{
     constructor(props){
@@ -77,9 +76,9 @@ class Stats extends Component{
             this.filteredData = this.fetchedData[this.state.dashboard.task]
     }
 
-    extractDatesLabel = () => {
+    formatDates = (list) => {
         this.dateLabelList = [];
-        Object.keys(this.filteredData).forEach((date) => {
+        list.forEach((date) => {
             this.dateLabelList.push(
                 date.split('').slice(6,8).join('')+':'+
                 date.split('').slice(4,6).join('')+':'+
@@ -202,8 +201,9 @@ class Stats extends Component{
                         incomplete.push((this.filteredData[date][!this.state.dashboard.task? this.props.intialTask :this.state.dashboard.task]).incomplete);
                     });
                     
+                    //this function formats the labels as dates
+                    this.formatDates(labels)
 
-                    this.extractDatesLabel()
 
                     //setting state to map data
                     this.setState((state) => ({
@@ -360,17 +360,7 @@ class Stats extends Component{
                     }
                 </div>
 
-                <div 
-                className='stats__rotate'
-                onClick={() => {
-                    this.setState((state) => ({
-                        ...state, 
-                        rotateClass:state.rotateClass === 'stats__chartboard active'? 'stats__chartboard':'stats__chartboard active'
-                    }))
-                }}
-                >
-                    <img className='stats__rotate-img' src={rotateSvg}/>
-                </div>
+                
                 <div className={this.state.rotateClass}>
                     {this.state.type && <Chart data={this.state.data} title={(this.state.dashboard.task).toUpperCase()} type={this.state.type}/>}
                 </div>
