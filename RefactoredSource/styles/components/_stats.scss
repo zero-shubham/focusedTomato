@@ -1,0 +1,101 @@
+.stats{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    &__dashboard{
+        margin-top: 1rem;
+        & > *{
+            margin: 0 .5rem;
+        }
+        @include respond(phone){
+            margin: .2rem;
+        }
+    }
+
+    &__rotate{
+        &-img{
+            height: 4rem;
+        }
+        display: none;
+
+        @include respond(phone){
+            display: block;
+        }
+    }
+    .doughnutChart{
+        height: 50rem;
+        width: 100%;
+    }
+    &__chartboard {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60%;
+        height: 70%;
+
+        
+
+        @include respond(tab-port){
+            width: 80%;
+            overflow: scroll;
+        }
+
+        @include respond(phone){
+            width: 95%;
+        }
+
+        &.active{
+            transform: rotate(90deg);
+
+            @include respond(phone){
+                width: 110%;
+                height: 60%; 
+                margin: 8rem 0; 
+            }
+            @include respond(phone-s){
+                width: 140%;
+                height: 45%; 
+                margin: 13.8rem 0; 
+            }
+
+            .doughnutChart{
+                height: 60%;
+            }
+        }
+
+    }
+
+    &__doughnut-legend{
+        margin-top: 2rem;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        color: $contrast-col;
+        text-transform: uppercase;
+
+        &-completed{
+            &::before{
+                content: '';
+                display: inline-block;
+                width: 1.8rem;
+                height: 1rem;
+                background-color: rgba(31, 221, 114, 0.6);
+                margin-right: .5rem; 
+            }
+        }
+
+        &-incomplete{
+            &::before{
+                content: '';
+                display: inline-block;
+                width: 1.8rem;
+                height: 1rem;
+                background-color: rgba(255, 75, 30, 0.6);
+                margin-right: .5rem; 
+            }
+        }
+    }
+}

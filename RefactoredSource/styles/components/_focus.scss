@@ -1,0 +1,40 @@
+.focus{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    overflow: hidden;
+    margin: .5rem 0;
+    
+    &__btnPanel{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width:40%;
+
+        &-tasks{
+            color: $contrast-col;
+            background-color: transparent;
+
+            border: 1px solid $contrast-col;
+            border-radius: .5rem;
+            padding: 1rem;
+            &:focus{
+                outline: none;
+                border: 1px solid $secondary-col;
+            }
+        }
+    }
+
+    &__clock{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.CircularProgressbar{
+    width: 90%!important;
+}

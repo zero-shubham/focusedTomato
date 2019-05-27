@@ -1,0 +1,105 @@
+.tasks{
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    &__search{
+        width: 42rem;
+        border: .1rem solid #037295;
+        border-radius: 1rem;
+        padding: 1rem;
+        background-color: transparent;
+
+        color: $contrast-col;
+        &::-webkit-input-placeholder{
+            color: #037295;
+        }
+        &:focus{
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($contrast-col, .1);
+            border-bottom: 3px solid $contrast-col;
+        }
+    }
+
+    &__list{
+        max-height: 40rem;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        
+        display: flex;
+        flex-direction: column;
+
+        border: .15rem solid $secondary-col;
+        border-radius: 1rem;
+        width: 40rem;
+        padding: 2rem;
+        transition: all 5s;
+
+
+        &::-webkit-scrollbar-track
+        {
+            background-color: transparent;
+            margin: 1rem;
+        }
+        &::-webkit-scrollbar
+        {
+            width: .8rem;
+            background-color: transparent;
+        }
+        &::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            background-color: $secondary-col;
+        }
+
+        @include respond(tab-port){
+            font-size: $medium-normal-font;
+            max-height: 50rem;
+        }
+        @include respond(phone){
+            font-size: $small-normal-font;
+
+            width: 85%;
+            max-height: 70rem;
+        }
+        @include respond(phone-s){
+            font-size: $smallest-normal-font;
+        }
+        
+    }
+}
+
+.task{
+    min-height: 3.5rem;
+    border: .05rem solid $secondary-col;
+    border-radius: 1rem;
+    padding: 1rem;
+
+    font-size: $large-normal-font;
+    color: $contrast-col;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:last-child){
+        margin-bottom: 1rem;
+    }
+
+    @include respond(tab-port){
+        font-size: $medium-normal-font;
+    }
+    @include respond(phone){
+        font-size: $small-normal-font;
+    }
+    @include respond(phone-s){
+        font-size: $smallest-normal-font;
+    }
+}
+
+.warn{
+    color: $contrast-col;
+}
