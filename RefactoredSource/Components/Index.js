@@ -25,12 +25,12 @@ import guestSvg from '../assets/guest.svg';
 import guestImg from '../assets/guest.jpg';
 
 
-class Signin extends Component{
+class Index extends Component{
     constructor(props){
         super(props);
         this.state = {
             display: 'signin',
-            processing: this.props.prompt.processing || false,
+            processing: false,
             prompt: false,
             promptText: '' ,
             promptIcon:''
@@ -38,6 +38,13 @@ class Signin extends Component{
         }
     };
 
+    resetAllInput = () => {
+        document.querySelector('#email').value = '';
+        try{
+            document.querySelector('#pass').value = '';
+        }catch{}
+        document.querySelector('#profilePic')?document.querySelector('#profilePic').value = '':false;
+    };
 
     handleSign = () => {
         const email = document.querySelector('#email').value;
@@ -89,7 +96,7 @@ class Signin extends Component{
             
                 {
                     //Checking whether to render processing component
-                    this.state.processing && <Processing />
+                    this.state.processing  && <Processing />
                 }
 
 
@@ -101,8 +108,9 @@ class Signin extends Component{
                     promptText={this.state.promptText || this.props.prompt.promptText}
                     icon={this.props.prompt.promptIcon || this.state.promptIcon}
                     close ={() => {
-                        this.setState((state) => ({...state,prompt:false,promptText:'',promptIcon:''}));
+                        this.setState((state) => ({...state,prompt:false,promptText:'',promptIcon:'',processing:false, display:'signin'}));
                         this.props.dispatch(resetPrompt());
+                        this.resetAllInput();
                         history.push('/');
                     }}
                     />
@@ -193,7 +201,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const mapStateToProps = (store) => {
-    if(Object.keys(store.prompt)){
+    if(Object.keys(store.prompt).length){
         return {
             prompt:{
                 ...store.prompt
@@ -201,9 +209,11 @@ const mapStateToProps = (store) => {
         }
     }else{
         return {
-            prompt: false
+            prompt: {
+                prompt: false
+            }
         }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signin);
+export default connect(mapStateToProps, mapDispatchToProps)(Index);
