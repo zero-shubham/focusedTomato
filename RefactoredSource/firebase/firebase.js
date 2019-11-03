@@ -4,12 +4,12 @@ import 'firebase/auth';
 import 'firebase/storage';
 
 const config = {
-    apiKey: "AIzaSyAlDJQuuqaQ4sVBYoUJV-sD9UP3c2vSyPI",
+    apiKey: "your-api-key",
     authDomain: "focusedtomato.firebaseapp.com",
     databaseURL: "https://focusedtomato.firebaseio.com",
     projectId: "focusedtomato",
     storageBucket: "focusedtomato.appspot.com",
-    messagingSenderId: "390856360712"
+    messagingSenderId: "msg-id"
 };
 
 firebase.initializeApp(config);
